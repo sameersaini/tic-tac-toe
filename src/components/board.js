@@ -13,15 +13,14 @@ export default class Board extends Component {
     }
 
     renderBoard() {
-        const { winnigCombination } = this.props;
+        const { winningCombination } = this.props;
         const board = [];
         let cellNumber = 0;
         for (let i = 0; i < 3; i++) {
             const cells = [];
             for (let j = 0; j < 3; j++) {
                 let highlight = false;
-                if (winnigCombination && winnigCombination.indexOf(cellNumber) !== -1) {
-                    console.log("highlighting")
+                if (winningCombination && winningCombination.indexOf(cellNumber) !== -1) {
                     highlight = true;
                 }
                 cells.push(this.renderSquare(cellNumber++, highlight));
@@ -34,7 +33,6 @@ export default class Board extends Component {
     render() {
         return (
             <div >
-                <div className="status"><h5 >{this.props.status}</h5></div>
                 {this.renderBoard()}
             </div>
         );

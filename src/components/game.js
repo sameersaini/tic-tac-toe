@@ -48,7 +48,7 @@ export default class Game extends Component {
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
                 return {
                     player: squares[a],
-                    combination: winningCombinations[i]
+                    combination: winningCombinations[i],
                 };
             }
         }
@@ -87,15 +87,18 @@ export default class Game extends Component {
         const current = history[this.state.stepNumber];
         const winner = this.checkWinner(current.squares);
         const full = this.checkFull(current.squares);
-        let winnigCombination = null;
+        let winningCombination = null;
 
         let status = `Next player: ${this.state.player}`;
+        let statusClass = 'text-primary';
         if (winner) {
             status = `Winner: ${winner.player}`;
-            winnigCombination = winner.combination;
+            winningCombination = winner.combination;
+            statusClass = 'text-success';
         }
         if (full && !winner) {
             status = 'It is a Draw';
+            statusClass = 'text-danger';
         }
 
         return (
@@ -108,11 +111,11 @@ export default class Game extends Component {
                 <div className="row">
                     <div className="col-md-6 col-md-offset-3 game">
                         <div className="col-sm-6 game-board">
+                            <div className={statusClass}><h5 >{status}</h5></div>
                             <Board
                                 squares={current.squares}
                                 onClick={this.handleClick}
-                                status={status}
-                                winnigCombination={winnigCombination}
+                                winningCombination={winningCombination}
                             />
                         </div>
                         <div className="col-sm-6 game-info">
