@@ -3,7 +3,7 @@ import React from 'react';
 export default function Square(props) {
     return (
         <button
-            className="square"
+            className={props.highlight ? 'highlight square' : 'square'}
             onClick={() => props.onClick()}
         >
             {props.value}

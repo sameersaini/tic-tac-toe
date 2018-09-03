@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from './board';
+import MoveList from './moveList';
 
 export default class Game extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ export default class Game extends Component {
         this.state = {
             history: [{
                 squares: new Array(9).fill(null),
+                location: null,
             }],
             player: this.CHAR_X,
             stepNumber: 0,
@@ -18,6 +20,15 @@ export default class Game extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.checkWinner = this.checkWinner.bind(this);
         this.jumpTo = this.jumpTo.bind(this);
+    }
+
+    checkFull(squares) {
+        for (let i = 0; i < squares.length; i++) {
+            if (squares[i] === null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     checkWinner(squares) {
@@ -35,7 +46,10 @@ export default class Game extends Component {
         for (let i = 0; i < winningCombinations.length; i++) {
             const [a, b, c] = winningCombinations[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a];
+                return {
+                    player: squares[a],
+                    combination: winningCombinations[i]
+                };
             }
         }
         return null;
@@ -52,14 +66,14 @@ export default class Game extends Component {
         if (squares[i] === null) {
             squares[i] = this.state.player;
             const player = this.state.player === this.CHAR_X ? this.CHAR_O : this.CHAR_X;
-
             this.setState({
-                history: [...history, { squares }],
+                history: [...history, { squares, location: i }],
                 player,
                 stepNumber: history.length,
             });
         }
     }
+
 
     jumpTo(step) {
         this.setState({
@@ -68,31 +82,20 @@ export default class Game extends Component {
         });
     }
 
-    createMoves(history) {
-        return history.map((move, step) => {
-            const text = step ? `Go to move # ${step}` : 'Restart game';
-
-            return (
-                <li style={{ width: '50%' }}
-                    className="list-group-item list-group-item-action"
-                    key={step}
-                    onClick={() => this.jumpTo(step)}
-                >
-                    {text}
-                </li>
-            );
-        });
-    }
-
     render() {
-        const moves = this.createMoves(this.state.history);
-        const history = this.state.history;
+        const { history } = this.state;
         const current = history[this.state.stepNumber];
         const winner = this.checkWinner(current.squares);
+        const full = this.checkFull(current.squares);
+        let winnigCombination = null;
 
         let status = `Next player: ${this.state.player}`;
         if (winner) {
-            status = `Winner: ${winner}`;
+            status = `Winner: ${winner.player}`;
+            winnigCombination = winner.combination;
+        }
+        if (full && !winner) {
+            status = 'It is a Draw';
         }
 
         return (
@@ -109,10 +112,14 @@ export default class Game extends Component {
                                 squares={current.squares}
                                 onClick={this.handleClick}
                                 status={status}
+                                winnigCombination={winnigCombination}
                             />
                         </div>
                         <div className="col-sm-6 game-info">
-                            <ol className="list-group" >{moves}</ol>
+                            <MoveList
+                                history={this.state.history}
+                                jumpTo={this.jumpTo}
+                            />
                         </div>
                     </div>
                 </div>
