@@ -7,6 +7,13 @@ import './index.css';
 // ========================================
 
 ReactDOM.render(
-    <Game />,
+    <div>
+        <div className="container">
+            <Game />
+        </div>
+        <footer className="footer" id="footer">
+            <span className="text-muted"><i className="far fa-copyright" /> No copyright</span>
+        </footer>
+    </div>,
     document.getElementById('root')
 );

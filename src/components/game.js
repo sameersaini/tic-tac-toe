@@ -105,11 +105,11 @@ export default class Game extends Component {
             <div>
                 <div className="row">
                     <hr />
-                    <h2 style={{ textAlign: 'center' }}><u>Tic Tac Toe</u></h2>
+                    <h2 style={{ textAlign: 'center', marginTop: '10px' }}><u>Tic Tac Toe</u></h2>
                     <hr />
                 </div>
                 <div className="row">
-                    <div className="col-md-6 col-md-offset-3 game">
+                    <div className="col-md-8 col-md-offset-2 game">
                         <div className="col-sm-6 game-board">
                             <div className={statusClass}><h5 >{status}</h5></div>
                             <Board
