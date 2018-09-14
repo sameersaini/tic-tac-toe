@@ -91,3 +91,22 @@ footer {
 .text-muted {
     padding-right: 20px;
 }
+
+.moveList-enter {
+    opacity: 0.1;
+}
+
+.moveList-enter-active {
+    opacity: 1;
+    transition: 400ms ease-in all;
+}
+
+
+.moveList-leave {
+    opacity: 1;
+}
+
+.moveList-leave-active {
+    opacity: 0.1;
+    transition: 400ms ease-in all;
+}

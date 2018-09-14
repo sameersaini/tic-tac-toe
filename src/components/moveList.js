@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class moveList extends Component {
     constructor(props) {
@@ -54,7 +55,13 @@ export default class moveList extends Component {
     render() {
         return (
             <ol className="list-group">
-                {this.createList()}
+                <ReactCSSTransitionGroup
+                    transitionName="moveList"
+                    transitionEnterTimeout={400}
+                    transitionLeaveTimeout={400}
+                >
+                    {this.createList()}
+                </ReactCSSTransitionGroup>
             </ol>
         );
     }
