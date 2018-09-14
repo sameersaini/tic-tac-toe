@@ -32,8 +32,9 @@ By default, react create apps will build map files also. These map files maps th
 visible to the client on source inspect in the browser. Ideally, in a production env , only mified files should be visible to the 
 client. So, to achieve this, I have changed the build script in the package.json file to removed the map files after build creation.
 
+##### package.json
 ```json
-"build": "react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map"
+{ "build": "react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map" }
 ```
 
 By doing so, only bundled js and css files are visible to the end user in a production env.
